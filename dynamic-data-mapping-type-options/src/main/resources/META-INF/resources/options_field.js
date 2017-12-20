@@ -20,6 +20,10 @@ AUI.add(
 						value: false
 					},
 
+					editable: {
+						value: true
+					},
+
 					sortable: {
 						value: true
 					},
@@ -57,6 +61,7 @@ AUI.add(
 							instance.after('liferay-ddm-form-field-key-value:render', instance._afterRenderOption),
 							instance.after('liferay-ddm-form-field-key-value:blur', instance._afterBlur),
 							instance.after('liferay-ddm-form-field-key-value:valueChange', instance._afterOptionValueChange),
+							instance.after('editableChange', instance._afterEditableChange),
 							sortableList.after('drag:end', A.bind('_afterSortableListDragEnd', instance)),
 							sortableList.after('drag:start', A.bind('_afterSortableListDragStart', instance))
 						);
@@ -305,6 +310,22 @@ AUI.add(
 						instance._setValue(value);
 					},
 
+					_afterEditableChange: function(event) {
+						var instance = this;
+
+						var options = instance.getOptions();
+
+						var editable = event.newVal;
+
+						options.forEach(
+							function(option) {
+								if (option.getValue()) {
+									option.set('generationLocked', !editable);
+								}
+							}
+						);
+					},
+
 					_afterErrorMessageChange: function(event) {
 						var instance = this;
 
@@ -425,12 +446,8 @@ AUI.add(
 					_bindOptionUI: function(option) {
 						var instance = this;
 
-						var editable = instance.get('editable');
-
-						if (editable) {
-							option.after(A.rbind('_afterOptionNormalizeKey', instance, option), option, 'normalizeKey');
-							option.bindContainerEvent('click', A.bind('_onOptionClickClose', instance, option), '.close');
-						}
+						option.after(A.rbind('_afterOptionNormalizeKey', instance, option), option, 'normalizeKey');
+						option.bindContainerEvent('click', A.bind('_onOptionClickClose', instance, option), '.close');
 					},
 
 					_canSortNode: function(event) {
@@ -587,6 +604,13 @@ AUI.add(
 						option.set('key', contextValue.value);
 
 						option.setValue(contextValue.label);
+
+						if (contextValue.value && option.normalizeKey(contextValue.label) !== contextValue.value) {
+							option.set('generationLocked', true);
+						}
+						else {
+							option.set('generationLocked', false);
+						}
 
 						instance._skipOptionValueChange = false;
 					},

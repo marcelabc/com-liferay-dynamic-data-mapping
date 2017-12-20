@@ -15,9 +15,6 @@
 							requires: [
 								'aui-autosize-deprecated',
 								'aui-tooltip',
-								'autocomplete',
-								'autocomplete-highlighters',
-								'autocomplete-highlighters-accentfold',
 								'liferay-ddm-form-renderer-field'
 							]
 						}
