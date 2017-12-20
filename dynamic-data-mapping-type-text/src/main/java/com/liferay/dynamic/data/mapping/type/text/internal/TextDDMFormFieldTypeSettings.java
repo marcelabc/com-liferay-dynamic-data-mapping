@@ -80,6 +80,11 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 )
 public interface TextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
+	
+	@DDMFormField(
+		label = "%autoComplete", properties = {"showAsSwitcher=true"}
+	)
+	public boolean autoComplete();
 
 	@DDMFormField(
 		label = "%create-list",
