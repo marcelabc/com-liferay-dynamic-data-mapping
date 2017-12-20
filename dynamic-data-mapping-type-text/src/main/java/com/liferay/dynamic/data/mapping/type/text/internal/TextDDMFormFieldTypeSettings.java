@@ -85,8 +85,7 @@ public interface TextDDMFormFieldTypeSettings
 		label = "%create-list",
 		optionLabels = {"%manually", "%from-data-provider"},
 		optionValues = {"manual", "data-provider"},
-		properties = {"showLabel=false"}, type = "radio",
-		visibilityExpression = "TRUE"
+		properties = {"showLabel=false"}, type = "radio"
 	)
 	public String dataSourceType();
 
@@ -96,8 +95,7 @@ public interface TextDDMFormFieldTypeSettings
 			"dataSourceType=data-provider",
 			"ddmDataProviderInstanceId=getDataProviderInstances"
 		},
-		type = "select",
-		visibilityExpression = "equals(dataSourceType, \"data-provider\")"
+		type = "select"
 	)
 	public long ddmDataProviderInstanceId();
 
@@ -106,8 +104,7 @@ public interface TextDDMFormFieldTypeSettings
 		properties = {
 			"tooltip=%choose-an-output-parameter-for-a-data-provider-previously-created"
 		},
-		type = "select",
-		visibilityExpression = "equals(dataSourceType, \"data-provider\")"
+		type = "select"
 	)
 	public String ddmDataProviderInstanceOutput();
 
@@ -123,8 +120,7 @@ public interface TextDDMFormFieldTypeSettings
 	@DDMFormField(
 		dataType = "ddm-options", label = "%options",
 		properties = {"showLabel=false", "allowEmptyOptions=true"},
-		required = false, type = "options",
-		visibilityExpression = "equals(dataSourceType, \"manual\")"
+		required = false, type = "options"
 	)
 	public DDMFormFieldOptions options();
 
