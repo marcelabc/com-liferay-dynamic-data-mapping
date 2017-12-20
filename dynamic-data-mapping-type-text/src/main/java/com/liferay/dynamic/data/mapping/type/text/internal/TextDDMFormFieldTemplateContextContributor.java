@@ -55,8 +55,6 @@ public class TextDDMFormFieldTemplateContextContributor
 
 		Map<String, Object> parameters = new HashMap<>();
 
-		parameters.put(
-			"autocompleteEnabled", isAutocompleteEnabled(ddmFormField));
 		parameters.put("displayStyle", getDisplayStyle(ddmFormField));
 		parameters.put(
 			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
@@ -131,17 +129,6 @@ public class TextDDMFormFieldTemplateContextContributor
 		}
 
 		return StringPool.BLANK;
-	}
-
-	protected boolean isAutocompleteEnabled(DDMFormField ddmFormField) {
-		String dataSourceType = GetterUtil.getString(
-			ddmFormField.getProperty("dataSourceType"));
-
-		if (Validator.isNotNull(dataSourceType)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference

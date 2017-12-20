@@ -18,11 +18,6 @@ AUI.add(
 		var TextField = A.Component.create(
 			{
 				ATTRS: {
-					autocompleteEnabled: {
-						state: true,
-						value: false
-					},
-
 					displayStyle: {
 						state: true,
 						value: 'singleline'
@@ -55,7 +50,6 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandlers.push(
-							instance.after('optionsChange', instance._afterOptionsChange),
 							instance.after('valueChange', instance._onTextFieldValueChange)
 						);
 
@@ -67,24 +61,6 @@ AUI.add(
 						);
 					},
 
-					getAutoComplete: function() {
-						var instance = this;
-
-						var autoComplete = instance._autoComplete;
-
-						var inputNode = instance.getInputNode();
-
-						if (autoComplete) {
-							autoComplete.set('inputNode', inputNode);
-						}
-						else {
-							instance._createAutocomplete();
-							autoComplete = instance._autoComplete;
-						}
-
-						return autoComplete;
-					},
-
 					getChangeEventName: function() {
 						return 'input';
 					},
@@ -93,12 +69,6 @@ AUI.add(
 						var instance = this;
 
 						TextField.superclass.render.apply(instance, arguments);
-
-						var autocompleteEnabled = instance.get('autocompleteEnabled');
-
-						if (autocompleteEnabled && instance.get('visible')) {
-							instance._createAutocomplete();
-						}
 
 						if (instance.get('displayStyle') === 'multiline') {
 							instance._setInitialHeight();
@@ -136,52 +106,6 @@ AUI.add(
 						}
 					},
 
-					_afterOptionsChange: function(event) {
-						var instance = this;
-
-						if (instance.get('autocompleteEnabled')) {
-							var autoComplete = instance.getAutoComplete();
-
-							if (!Util.compare(event.newVal, event.prevVal)) {
-								autoComplete.set('source', event.newVal);
-
-								autoComplete.fire(
-									'query',
-									{
-										inputValue: instance.getValue(),
-										query: instance.getValue(),
-										src: A.AutoCompleteBase.UI_SRC
-									}
-								);
-							}
-						}
-					},
-
-					_createAutocomplete: function() {
-						var instance = this;
-
-						var inputNode = instance.getInputNode();
-
-						if (instance._autoComplete) {
-							instance._autoComplete.destroy();
-						}
-
-						instance._autoComplete = new A.AutoComplete(
-							{
-								after: {
-									select: A.bind(instance.evaluate, instance)
-								},
-								inputNode: inputNode,
-								maxResults: 10,
-								render: true,
-								resultFilters: ['charMatch', 'subWordMatch'],
-								resultHighlighter: 'subWordMatch',
-								resultTextLocator: 'label',
-								source: instance.get('options')
-							}
-						);
-					},
-
 					_onTextFieldValueChange: function() {
 						var instance = this;
 
@@ -209,6 +133,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-autosize-deprecated', 'aui-tooltip', 'autocomplete', 'autocomplete-filters', 'autocomplete-highlighters', 'autocomplete-highlighters-accentfold', 'liferay-ddm-form-renderer-field']
+		requires: ['aui-autosize-deprecated', 'aui-tooltip', 'liferay-ddm-form-renderer-field']
 	}
 );
