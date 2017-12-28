@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		@DDMFormRule(
 			actions = {
 				"setOptions('predefinedValue', getValue('options'))",
+				"setMultiple('predefinedValue', getValue('multiple'))",
 				"setRequired('ddmDataProviderInstanceId', equals(getValue('dataSourceType'), \"data-provider\"))",
 				"setRequired('ddmDataProviderInstanceOutput', equals(getValue('dataSourceType'), \"data-provider\"))",
 				"setRequired('options', equals(getValue('dataSourceType'), \"manual\"))",
