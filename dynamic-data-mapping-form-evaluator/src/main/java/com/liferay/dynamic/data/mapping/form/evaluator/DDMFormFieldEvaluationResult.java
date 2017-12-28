@@ -95,6 +95,10 @@ public class DDMFormFieldEvaluationResult {
 		return HashUtil.hash(hash, _instanceId);
 	}
 
+	public boolean isMultiple() {
+		return MapUtil.getBoolean(_properties, "multiple");
+	}
+	
 	public boolean isReadOnly() {
 		return MapUtil.getBoolean(_properties, "readOnly");
 	}
@@ -125,6 +129,10 @@ public class DDMFormFieldEvaluationResult {
 
 		_nestedDDMFormFieldEvaluationResults =
 			nestedDDMFormFieldEvaluationResults;
+	}
+	
+	public void setMultiple(boolean multiple) {
+		_properties.put("required", multiple);
 	}
 
 	public void setProperty(String name, Object value) {
