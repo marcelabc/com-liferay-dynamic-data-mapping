@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -61,12 +62,15 @@ public class SelectDDMFormFieldTemplateContextContributor
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		Map<String, Object> parameters = new HashMap<>();
+		
+		boolean multiple = MapUtil.getBoolean(ddmFormFieldRenderingContext.getProperties(), "multiple", ddmFormField.isMultiple());
 
 		parameters.put(
 			"dataSourceType",
 			GetterUtil.getString(
 				ddmFormField.getProperty("dataSourceType"), "manual"));
-		parameters.put("multiple", ddmFormField.isMultiple());
+		
+		parameters.put("multiple", multiple);
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormFieldOptionsFactory.create(
